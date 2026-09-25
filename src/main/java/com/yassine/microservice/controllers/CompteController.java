@@ -1,7 +1,9 @@
 package com.yassine.microservice.controllers;
 
+import com.yassine.microservice.dtos.CompteDTO;
 import com.yassine.microservice.entities.Compte;
 import com.yassine.microservice.repositories.CompteRepository;
+import com.yassine.microservice.services.CompteService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,32 +16,37 @@ import java.util.List;
 @RequestMapping("/api/comptes")
 @AllArgsConstructor
 public class CompteController {
-    private final CompteRepository compteRepository;
+
+    private final CompteService compteService;
+
+
 
     @GetMapping
-    public List<Compte> getComptes(){
-        return compteRepository.findAll();
+    public List<CompteDTO> getComptes() {
+        return compteService.getAllComptes();
     }
 
     @GetMapping("/{id}")
-    public Compte getCompte(@PathVariable Long id){
-        return compteRepository.findById(id).orElse(null);
+    public CompteDTO getCompte(@PathVariable Long id) {
+        return compteService.getCompte(id);
     }
 
     @PostMapping
-    public Compte saveCompte(@RequestBody Compte compte){
-        return compteRepository.save(compte);
+    public CompteDTO saveCompte(@RequestBody CompteDTO compteDTO) {
+        return compteService.saveCompte(compteDTO);
     }
 
     @PutMapping("/{id}")
-    public Compte updateCompte(@PathVariable Long id,@RequestBody Compte compte){
-        compte.setId(id);
-        return compteRepository.save(compte);
+    public CompteDTO updateCompte(
+            @PathVariable Long id,
+            @RequestBody CompteDTO compteDTO) {
+
+        return compteService.updateCompte(id, compteDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCompte(@PathVariable Long id){
-        compteRepository.deleteById(id);
+    public void deleteCompte(@PathVariable Long id) {
+        compteService.deleteCompte(id);
     }
 
 }
