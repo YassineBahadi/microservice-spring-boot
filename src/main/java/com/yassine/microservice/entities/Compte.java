@@ -1,10 +1,7 @@
 package com.yassine.microservice.entities;
 
 import com.yassine.microservice.enums.TypeCompte;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +20,6 @@ public class Compte {
     private Long id;
     private double solde;
     private String dateCreation;
+    @Enumerated(EnumType.STRING)
     private TypeCompte type;
 }
